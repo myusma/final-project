@@ -1,24 +1,37 @@
-import logo from './logo.svg';
+import React, {useContext} from 'react';
+import {Navigate, Route, Routes} from 'react-router-dom';
+import NavBar from './components/NavBar';
+import Results from './pages/results/Results';
+import Home from './pages/home/Home';
+import SignIn from './pages/signIn/SignIn';
+import SignUp from './pages/signUp/SignUp';
+import Search from './pages/search/Search'
 import './App.css';
+import {AuthContext} from "./context/AuthContext";
+
 
 function App() {
+
+  const {isAuth} = useContext(AuthContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <>
+        <NavBar/>
+
+        <div className="content">
+
+          <Routes>
+
+            <Route exact path="/" element={<Home/>}/>
+            <Route exact path="/search" element={isAuth === true ? <Search/> : <Navigate to="/"/>}/>
+            <Route exact path="/results" element={<Results/>}/>
+            <Route exact path="/signin" element={<SignIn/>}/>
+            <Route exact path="/signup" element={<SignUp/>}/>
+
+
+          </Routes>
+        </div>
+      </>
   );
 }
 
