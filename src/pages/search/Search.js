@@ -9,6 +9,7 @@ function Search() {
     const [citySearch, setCitySearch] = useState('')
     const [cityList, setCityList] = useState([])
     const [selectedCityList, setSelectedCityList] = useState([])
+    const [hotelList, setHotelList] = useState([])
 
     useEffect(() => {
         searchCity(citySearch)
@@ -61,6 +62,8 @@ function Search() {
             }
 
         });
+        console.log("acd", response.data.result)
+        setHotelList(response.data.result)
     }
 
     return (
@@ -68,6 +71,9 @@ function Search() {
             <div className='search'>
 
                 <h1>Search Page</h1>
+
+
+                {/*<Results hotelList = {hotelList}/>*/}}
 
                 {selectedCityList.map((city) => <p>{city.name}</p>)}
 

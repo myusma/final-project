@@ -11,44 +11,41 @@ function AuthContextProvider({children}) {
     const [auth, setAuth] = useState({
         isAuth: false,
         user: null,
-        status: false
+        status: 'pending'
     });
 
     const navigate = useNavigate()
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token')
-        const decodedToken = jwtDecode(storedToken)
 
-        if (storedToken && Math.floor(Date.now()/1000) < decodedToken.exp) {
-            void fetchData(storedToken, decodedToken.sub)
-        }else{
-            setAuth({
+        if (storedToken) {
+            const decodedToken = jwtDecode(storedToken)
+
+            if (Math.floor(Date.now() / 1000) < decodedToken.exp) {
+                void fetchData(storedToken, decodedToken.sub)
+            } else  {
+                localStorage.removeItem( 'token' )
+            }
+        } else {
+            setAuth( {
                 ...auth,
                 isAuth: false,
-                user: null
-            })
+                user: null,
+                status: "done"
+            } )
         }
-    }, [])
+    }, [] )
 
     function login(jwt) {
-        setAuth({
-            isAuth: true,
-
-        });
         localStorage.setItem('token', jwt);
         const decodedToken = jwtDecode(jwt)
-        fetchData(jwt, decodedToken.sub)
-        console.log('Gebruiker is ingelogd');
-        console.log(jwt)
-        navigate('/search');
 
+        void fetchData(jwt, decodedToken.sub, '/search')
 
-        void fetchData(jwt, decodedToken.sub)
-        navigate('/search')
     }
 
-    async function fetchData(jwt, id) {
+    async function fetchData(jwt, id ,redirect) {
         try {
             const response = await axios.get(`http://localhost:3000/600/users/${id}`, {
                 headers: {
@@ -66,15 +63,17 @@ function AuthContextProvider({children}) {
                     email: response.data.email,
                     id: response.data.id,
                 },
-                status: true
+                status: 'done'
             });
-
+            if (redirect) {
+                navigate(redirect)
+            }
 
         } catch (e) {
             console.error(e)
             setAuth({
                 ...auth,
-                status: true
+                status: 'done'
             })
         }
     }
@@ -84,7 +83,7 @@ function AuthContextProvider({children}) {
         setAuth({
             isAuth: false,
             user: null,
-            status: true
+            status: 'done'
         });
         console.log('Gebruiker is uitgelogd!');
         navigate('/');
@@ -97,13 +96,13 @@ function AuthContextProvider({children}) {
         logout: logout,
         isAuth: auth.isAuth,
         user: auth.user,
-        status:auth.status
+        status: auth.status
 
     };
 
     return (
         <AuthContext.Provider value={data}>
-            {auth.status === true ? children : <p>Loading...</p>}
+            {auth.status === 'done' ? children : <p>Loading...</p>}
         </AuthContext.Provider>
     )
 }
