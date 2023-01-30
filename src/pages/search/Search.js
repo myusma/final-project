@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import axios from "axios";
 import './Search.css'
 
 function Search() {
-
+    const navigate = useNavigate()
     const [formValues, setFormValues] = useState({})
     const [citySearch, setCitySearch] = useState('')
     const [cityList, setCityList] = useState([])
     const [selectedCityList, setSelectedCityList] = useState([])
-    const [hotelList, setHotelList] = useState([])
+
 
     useEffect(() => {
         searchCity(citySearch)
@@ -40,30 +40,16 @@ function Search() {
 
         console.log(formValues)
 
-        const response = await axios.get('https://booking-com.p.rapidapi.com/v1/hotels/search', {
-            params: {
+
+        navigate('/results', {
+            state: {
                 checkin_date: formValues.checkinDate,
                 checkout_date: formValues.checkoutDate,
-                adults_number: formValues.numberOfGuest,
-                room_number: '1',
-                locale: 'en-gb',
-                order_by: 'price',
-                filter_by_currency: 'EUR',
-                units: 'metric',
-                dest_type: 'city',
-                dest_id: selectedCityList[0].destId,
-                page_number: '0',
-
-
-            },
-            headers: {
-                'X-RapidAPI-Key': '5690b94c0bmsh8c0a4adda8fe1e4p10d37ejsn64a61e4746ad',
-                'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
+                adults_number: formValues.numberOfGuest, dest_id: selectedCityList[0].destId
             }
+        })
 
-        });
-        console.log("acd", response.data.result)
-        setHotelList(response.data.result)
+
     }
 
     return (
@@ -73,29 +59,26 @@ function Search() {
                 <h1>Search Page</h1>
 
 
-                {/*<Results hotelList = {hotelList}/>*/}}
-
                 {selectedCityList.map((city) => <p>{city.name}</p>)}
 
                 <form onSubmit={handleFormSubmit}>
 
-                <label htmlFor="city">City </label>
-                <input
-                    type="text"
-                    value={citySearch}
-                    onChange={(e) => setCitySearch(e.target.value)}
-                />
+                    <label htmlFor="city">City </label>
+                    <input
+                        type="text"
+                        value={citySearch}
+                        onChange={(e) => setCitySearch(e.target.value)}
+                    />
 
-                {cityList.map((city) => <p
-                    onClick={() => {
-                        setSelectedCityList([...selectedCityList, {
-                            name: city.name,
-                            destId: city.destId
-                        }])
-                        setCitySearch('')
-                        setCityList([])
-                    }}>{city.name}</p>)}
-
+                    {cityList.map((city) => <p
+                        onClick={() => {
+                            setSelectedCityList([...selectedCityList, {
+                                name: city.name,
+                                destId: city.destId
+                            }])
+                            setCitySearch('')
+                            setCityList([])
+                        }}>{city.name}</p>)}
 
 
                     <label htmlFor="numberOfGuest">Number of guest:</label>
