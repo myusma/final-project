@@ -9,6 +9,7 @@ import Search from './pages/search/Search'
 import Details from './pages/Details/Details'
 import './App.css';
 import {AuthContext} from "./context/AuthContext";
+import Reservation from "./pages/reservation/Reservation";
 
 
 function App() {
@@ -26,10 +27,10 @@ function App() {
                     <Route exact path="/" element={<Home/>}/>
                     <Route exact path="/search" element={isAuth === true ? <Search/> : <Navigate to="/"/>}/>
                     <Route exact path="/results" element={<Results/>}/>
-                    <Route exact path="/details" element={<Details/>}/>
+                    <Route exact path="/details/:id" element={<Details/>}/>
                     <Route exact path="/signin" element={<SignIn/>}/>
                     <Route exact path="/signup" element={<SignUp/>}/>
-
+                    <Route exact path="/reservation/:id" element={<Reservation/>}/>
 
                 </Routes>
             </div>

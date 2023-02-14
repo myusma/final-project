@@ -30,8 +30,8 @@ function NavBar() {
 
                     <>
 
-                        <span>{user && user.email}  </span>
-                        <button type="button" onClick={logout}>Logout</button>
+                        <span>Welcome {user && user.username}  </span>
+                        <button className='navButton' type="button" onClick={logout}>Signout</button>
 
 
                     </>
@@ -40,8 +40,8 @@ function NavBar() {
 
                     <>
 
-                        <button type="button" onClick={() => navigate('/signin')}>Login</button>
-                        <button type="button" onClick={() => navigate('/signup')}>Signup</button>
+                        <button className='navButton' type="button" onClick={() => navigate('/signin')}>Signin</button>
+                        <button className='navButton' type="button" onClick={() => navigate('/signup')}>Signup</button>
 
                     </>
 

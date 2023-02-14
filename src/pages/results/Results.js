@@ -29,7 +29,7 @@ function Results() {
 
                 },
                 headers: {
-                    'X-RapidAPI-Key': '5690b94c0bmsh8c0a4adda8fe1e4p10d37ejsn64a61e4746ad',
+                    'X-RapidAPI-Key': '0cc531a7a2msh8cbb54b572e8654p1cbd69jsn55287375b7d4',
                     'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
                 }
 
@@ -45,15 +45,16 @@ function Results() {
     return (
         <>
 
-
             <div>
 
                 {hotelList.map((hotel) => {
                     return (
 
                         <div className='container' onClick={() => {
-                            navigate('/details?id=' + hotel.hotel_id)
+                            navigate('/details/' + hotel.hotel_id)
                         }} key={hotel.hotel_id}>
+
+
 
                             <div className='fotoContainer'>
                                 <img className='foto' src={hotel.max_photo_url}/>
@@ -64,9 +65,9 @@ function Results() {
                                 <h3> {hotel.address}</h3>
                                 <h3>{hotel.city_trans}</h3>
                                 <h3>Total Price : {hotel.min_total_price.toFixed(2)}{hotel.currencycode}</h3>
+                                <b>Score: {hotel.review_score}</b>
 
                             </div>
-
 
                         </div>
                     )

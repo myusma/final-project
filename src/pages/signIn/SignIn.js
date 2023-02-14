@@ -8,21 +8,48 @@ function SignIn() {
     const {login} = useContext(AuthContext);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [errorEmail, setErrorEmail] = useState(null)
+    const [errorLogin, setErrorLogin] = useState(null)
+
     console.log(email)
 
+    function validateLogin() {
+        let errorCount = 0;
 
-    async function handleLogin (e){
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            setErrorEmail("Email is invalid");
+            errorCount++;
+        } else {
+            setErrorEmail(null);
+        }
+
+
+        if (errorCount > 0) {
+            return false
+        } else {
+            return true
+        }
+    }
+
+    async function handleLogin(e) {
         e.preventDefault()
-        try{
+
+        if (!validateLogin()){
+            return
+        }
+        try {
             const response = await axios.post('http://localhost:3000/login', {
                 email: email,
                 password: password,
             })
-            console.log(response)
+            console.log('loginStatus', response)
             login(response.data.accessToken)
+            setErrorLogin(null)
 
-        }catch (e){
+        } catch (e) {
             console.error(e)
+            setErrorLogin('email adress and password does not match ')
+
         }
 
     }
@@ -31,24 +58,23 @@ function SignIn() {
     return (
         <>
             <h1>Signin</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias cum debitis dolor dolore fuga id
-                molestias qui quo unde?</p>
+
 
             <form onSubmit={handleLogin}>
                 <div>
 
                     <label htmlFor="email">Email : </label>
                     <input
-                        type="email"
+                        type="text"
                         name="email"
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <div>
-                        <label htmlFor="password">Wachtwoord:</label>
+                        <label htmlFor="password">Password:</label>
                         <input
-                            type="text"
+                            type="password"
                             name="password"
                             id="password"
                             value={password}
@@ -57,10 +83,15 @@ function SignIn() {
                     </div>
 
                 </div>
-                <button type="submit" >Inloggen</button>
+                <button type="submit">Signin</button>
+                <br/>
+                {errorEmail && <h4>{errorEmail}</h4>}
+                {errorLogin && <h4>{errorLogin}</h4>}
+
             </form>
 
-            <p>Heb je nog geen account? <Link to="/signup">Registreer</Link> je dan eerst.</p>
+            <p>Don´t you have an account yet? Click on <Link to="/signup">Signup</Link> to register.</p>
+            <p>Back to the <Link to="/">Homepage</Link></p>
         </>
     );
 }

@@ -4,16 +4,21 @@
 button {
   border-radius: 4px;
   border: none;
-  /*color: white;*/
+
   padding: 8px 16px;
   background-color: darksalmon;
   color: white;
   font-weight: bold;
-}
+
+}.navButton{
+  width: 120px;
+
+ }
 
 /*Zorgt ervoor dat als twee buttons naast elkaar staan, er altijd ruimte tussen blijft*/
 button + button {
   margin-left: 8px;
+
 }
 
 button:hover {
@@ -57,6 +62,8 @@ h2 {
 
 .content {
   margin: 32px;
+
+
 }
 
 .form-button {

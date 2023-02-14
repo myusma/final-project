@@ -23,8 +23,10 @@ function AuthContextProvider({children}) {
             const decodedToken = jwtDecode(storedToken)
 
             if (Math.floor(Date.now() / 1000) < decodedToken.exp) {
+                console.log( "De gebruiker is NOG STEEDS ingelogd 🔓" )
                 void fetchData(storedToken, decodedToken.sub)
             } else  {
+                console.log( "De token is verlopen" )
                 localStorage.removeItem( 'token' )
             }
         } else {
@@ -38,6 +40,7 @@ function AuthContextProvider({children}) {
     }, [] )
 
     function login(jwt) {
+        console.log( "De gebruiker is ingelogd 🔓" )
         localStorage.setItem('token', jwt);
         const decodedToken = jwtDecode(jwt)
 
@@ -80,12 +83,14 @@ function AuthContextProvider({children}) {
 
 
     function logout() {
-        setAuth({
+        console.log( "De gebruiker is uitgelogd 🔒" )
+        localStorage.removeItem( 'token' )
+        setAuth( {
+            ...auth,
             isAuth: false,
             user: null,
-            status: 'done'
-        });
-        console.log('Gebruiker is uitgelogd!');
+            status: "done"
+        } )
         navigate('/');
     }
 

@@ -10,20 +10,27 @@ function Search() {
     const [cityList, setCityList] = useState([])
     const [selectedCityList, setSelectedCityList] = useState([])
 
+    function handleRemoveCityItem (index){
+        const temp = [...selectedCityList]
+        temp.splice(index,1)
+        setSelectedCityList(temp)
+    }
+
 
     useEffect(() => {
         searchCity(citySearch)
     }, [citySearch])
 
+
     const searchCity = async (text) => {
         const response = await axios.get('https://booking-com.p.rapidapi.com/v1/hotels/locations', {
             params: {name: text, locale: 'en-gb'},
             headers: {
-                'X-RapidAPI-Key': '5690b94c0bmsh8c0a4adda8fe1e4p10d37ejsn64a61e4746ad',
+                'X-RapidAPI-Key': '0cc531a7a2msh8cbb54b572e8654p1cbd69jsn55287375b7d4',
                 'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
             }
         });
-
+        console.log('search', response.data)
         setCityList(response.data.map((record) => ({
             destId: record.dest_id,
             name: record.name
@@ -49,7 +56,6 @@ function Search() {
             }
         })
 
-
     }
 
     return (
@@ -59,7 +65,11 @@ function Search() {
                 <h1>Search Page</h1>
 
 
-                {selectedCityList.map((city) => <p>{city.name}</p>)}
+                {selectedCityList.map((city,index) =>
+                    <div className='cityListItem' key={index}>
+                        <p>{city.name}</p>
+                        <button className='cityListItemButton' onClick={()=>handleRemoveCityItem(index)}>X</button>
+                    </div>)}
 
                 <form onSubmit={handleFormSubmit}>
 
@@ -108,7 +118,7 @@ function Search() {
                 </form>
 
 
-                <p>Terug naar de <Link to="/">Homepagina</Link></p>
+                <p>Back to the <Link to="/">Homepage</Link></p>
             </div>
         </>
     );
