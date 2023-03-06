@@ -1,0 +1,112 @@
+.itemContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+.photoItems {
+    width: 300px;
+    margin: 5px;
+    max-height: 300px;
+    object-fit: contain;
+    height: 300px;
+    opacity: 0.5;
+}
+
+.photoItems:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.divStyle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 600px
+}
+
+.hotelBigImage {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.reservationArea {
+    background-color: cornflowerblue;
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+.reservationButtonContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.reservationButton {
+    margin-right: 30px;
+}
+
+.arrowButton {
+    position: absolute;
+    z-index: 10;
+    color: black;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid;
+    margin: 5px;
+}
+
+.arrowButton:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.nextArrow {
+    right: 0;
+}
+
+.prevArrow {
+    left: 0;
+}
+
+/* dialog */
+.dialog {
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+    width: calc(100vw - 2em);
+    height: 100vh;
+    padding: 1em;
+    background: rgba(101, 110, 119, 0.8);
+    box-shadow: 0 0 5px rgba(101, 110, 119, .2);
+    border: 0;
+}
+
+.dialogContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dialogContentTopArea {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.dialogContentBottomArea {
+    padding: 10px;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    justify-content: center;
+    background: rgba(101, 110, 119, 0);
+}
