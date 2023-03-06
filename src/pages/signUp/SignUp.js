@@ -66,7 +66,7 @@ function SignUp() {
 
     return (
         <>
-            <h1>Sign up and to get started</h1>
+            <h1>Sign up to get started</h1>
 
 
             <form onSubmit={handleSingUp}>

@@ -9,43 +9,87 @@ function Results() {
     const {state} = useLocation()
     const {checkin_date, checkout_date, adults_number, dest_id} = state
     const [hotelList, setHotelList] = useState([])
+    const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [priceLowToHigh, setPriceLowToHigh] = useState(true)
 
-    useEffect(() =>{
+
+    useEffect(() => {
         const getData = async () => {
-            const response = await axios.get('https://booking-com.p.rapidapi.com/v1/hotels/search', {
-                params: {
-                    checkin_date: checkin_date,
-                    checkout_date: checkout_date,
-                    adults_number: adults_number,
-                    room_number: '1',
-                    locale: 'en-gb',
-                    order_by: 'price',
-                    filter_by_currency: 'EUR',
-                    units: 'metric',
-                    dest_type: 'city',
-                    dest_id: dest_id,
-                    page_number: '0',
+            try {
+                setError(false);
+                setLoading(true);
+
+                const response = await axios.get('https://booking-com.p.rapidapi.com/v1/hotels/search', {
+                    params: {
+                        checkin_date: checkin_date,
+                        checkout_date: checkout_date,
+                        adults_number: adults_number,
+                        room_number: '1',
+                        locale: 'en-gb',
+                        order_by: 'price',
+                        filter_by_currency: 'EUR',
+                        units: 'metric',
+                        dest_type: 'city',
+                        dest_id: dest_id,
+                        page_number: '0',
 
 
-                },
-                headers: {
-                    'X-RapidAPI-Key': '0cc531a7a2msh8cbb54b572e8654p1cbd69jsn55287375b7d4',
-                    'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
-                }
+                    },
+                    headers: {
+                        'X-RapidAPI-Key': '388e84d0camshb44a39adef84bc1p1535b4jsn99d40ef6a210',
+                        'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
+                    }
 
-            });
-            console.log("acd", response.data.result)
-            setHotelList(response.data.result)
+                });
+                console.log("acd", response.data.result)
+                setHotelList(response.data.result)
+            } catch (error) {
+                console.error(error)
+                setError(true)
+            } finally {
+                setLoading(false)
+            }
+
         }
-        void getData()
 
+        void getData()
     }, [])
 
 
+    function selectByPrice() {
+        let hotels = [...hotelList]
+        setHotelList([])
+        if (priceLowToHigh) {
+            hotels.sort((a, b) => {
+                return a.min_total_price - b.min_total_price
+            })
+            setPriceLowToHigh(false)
+        } else {
+            hotels.sort((a, b) => {
+                return b.min_total_price - a.min_total_price
+            })
+            setPriceLowToHigh(true)
+        }
+        setHotelList(hotels)
+    }
+
     return (
         <>
+            <div>
+                <button onClick={() => {
+                    selectByPrice()
+                }}>
+                    Select by price
+
+                </button>
+            </div>
 
             <div>
+
+
+                {loading && <p>Loading...</p>}
+                {error && <p>Error: Could not fetch data!</p>}
 
                 {hotelList.map((hotel) => {
                     return (
@@ -53,7 +97,6 @@ function Results() {
                         <div className='container' onClick={() => {
                             navigate('/details/' + hotel.hotel_id)
                         }} key={hotel.hotel_id}>
-
 
 
                             <div className='fotoContainer'>

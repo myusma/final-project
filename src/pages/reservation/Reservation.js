@@ -14,12 +14,13 @@ const Reservation = () => {
 
     useEffect(() => {
         const getDetails = async () => {
+
             const options = {
                 method: "GET",
                 url: "https://booking-com.p.rapidapi.com/v1/hotels/data",
                 params: {locale: "en-gb", hotel_id: id},
                 headers: {
-                    "X-RapidAPI-Key": "0cc531a7a2msh8cbb54b572e8654p1cbd69jsn55287375b7d4",
+                    "X-RapidAPI-Key": "388e84d0camshb44a39adef84bc1p1535b4jsn99d40ef6a210",
                     "X-RapidAPI-Host": "booking-com.p.rapidapi.com",
                 },
             };
@@ -37,7 +38,7 @@ const Reservation = () => {
         function validation(){
             let expression = /[a-zA-Z0-9]{18}/;
             if(!expression.test(bankAccountNumber)){
-                setErrorBankAccount('Bankaccoun number should have 18 digits')
+                setErrorBankAccount('Bankaccount number should have 18 digits')
             }else {
                 setErrorBankAccount(null)
             }

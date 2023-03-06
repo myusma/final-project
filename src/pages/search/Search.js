@@ -26,7 +26,7 @@ function Search() {
         const response = await axios.get('https://booking-com.p.rapidapi.com/v1/hotels/locations', {
             params: {name: text, locale: 'en-gb'},
             headers: {
-                'X-RapidAPI-Key': '0cc531a7a2msh8cbb54b572e8654p1cbd69jsn55287375b7d4',
+                'X-RapidAPI-Key': '388e84d0camshb44a39adef84bc1p1535b4jsn99d40ef6a210',
                 'X-RapidAPI-Host': 'booking-com.p.rapidapi.com'
             }
         });

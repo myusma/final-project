@@ -18,7 +18,7 @@ function NavBar() {
 
             <img src={logo} alt="logo"/>
             <h3>
-              SMART TARAVEL
+              SMART TRAVEL
             </h3>
 
           </span>

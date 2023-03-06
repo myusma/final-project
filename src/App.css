@@ -1,6 +1,6 @@
 
 
-/*Algemene button styling*/
+
 button {
   border-radius: 4px;
   border: none;
@@ -15,7 +15,7 @@ button {
 
  }
 
-/*Zorgt ervoor dat als twee buttons naast elkaar staan, er altijd ruimte tussen blijft*/
+
 button + button {
   margin-left: 8px;
 
@@ -35,7 +35,7 @@ a:hover {
   color: #ea7e1f;
 }
 
-/*Algemene formulier-styling*/
+
 form {
   display: flex;
   flex-direction: column;
@@ -101,7 +101,7 @@ section  {
   margin: 0 0 50px 0;
 }
 
-/*Zet mij op een element en ik blijf voor altijd draaien!*/
+
 .loading-icon {
   width: 16px;
   height: 16px;

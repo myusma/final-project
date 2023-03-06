@@ -45,7 +45,6 @@ function AuthContextProvider({children}) {
         const decodedToken = jwtDecode(jwt)
 
         void fetchData(jwt, decodedToken.sub, '/search')
-
     }
 
     async function fetchData(jwt, id ,redirect) {
